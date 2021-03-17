@@ -1,15 +1,31 @@
 {
-  "name": "film-test",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "10.0.9",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
-  }
+	"name": "film-test",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start"
+	},
+	"dependencies": {
+		"gsap": "^3.6.0",
+		"next": "10.0.9",
+		"react": "17.0.1",
+		"react-dom": "17.0.1",
+		"react-query": "^3.12.2",
+		"spinners-react": "^1.0.4",
+		"styled-components": "^5.2.1"
+	},
+	"babelMacros": {
+		"twin": {
+			"preset": "styled-components"
+		}
+	},
+	"devDependencies": {
+		"babel-plugin-macros": "^3.0.1",
+		"babel-plugin-styled-components": "^1.12.0",
+		"react-is": "^17.0.1",
+		"tailwindcss": "^2.0.3",
+		"twin.macro": "^2.3.0"
+	}
 }
