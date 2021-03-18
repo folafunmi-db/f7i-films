@@ -1,12 +1,8 @@
 import GlobalStyles from "./../components/GlobalStyles";
 import Head from "next/head";
-import { AuthConfig } from "react-use-auth";
-import { Auth0 } from "react-use-auth/auth0";
-import { useRouter } from "next/router";
+import { Provider } from "next-auth/client";
 
 const App = ({ Component, pageProps }) => {
-	const router = useRouter();
-	
 	return (
 		<>
 			<Head>
@@ -47,17 +43,10 @@ const App = ({ Component, pageProps }) => {
 					rel="stylesheet"
 				/>
 			</Head>
-			<AuthConfig
-				authProvider={Auth0}
-				navigate={(url) => router.push(url)}
-				params={{
-					domain: "film-app.us.auth0.com",
-					clientID: "nBcv3IyLiB0w4LkdojlvNxCJ1wrPCZW6",
-				}}
-			>
-				<GlobalStyles />
-				<Component {...pageProps} />
-			</AuthConfig>
+				<Provider session={pageProps.session}>
+					<GlobalStyles />
+					<Component {...pageProps} />
+				</Provider>
 		</>
 	);
 };
