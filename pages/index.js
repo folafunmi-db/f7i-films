@@ -1,11 +1,13 @@
 import Head from "next/head";
 import tw, { styled } from "twin.macro";
-import { useSession } from "next-auth/client";
 import Link from "next/link";
 import NavBar from "../components/NavBar";
 import Movie from "../components/Movie";
 import Latest from "../components/Latest";
 import { useGetMovies } from "./api/hello.js";
+import { useState } from "react";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { SpinnerDotted } from "spinners-react";
 
 const Shell = styled.div`
 	background-color: #8d54e7;
@@ -60,15 +62,52 @@ const MovieList = styled.div`
 	grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
 	grid-gap: 2rem;
 	width: 100%;
+	margin-bottom: 2rem;
 `;
 
 const MovieSection = tw.div`w-full flex flex-col gap-4 font-bold font-exo text-2xl justify-start items-start`;
 
-export default function Home() {
-	const [session, loading] = useSession();
-	const { movies, isLoading, isError, url } = useGetMovies(1);
+const HelpDiv = styled.div`
+	background-size: cover;
+	background-position: center;
+	background: #8d54e7;
+	min-height: 24rem;
+	${tw`shadow-xl rounded-lg w-full bg-center text-white my-4 bg-cover flex flex-col sm:flex-row justify-center items-center px-6 py-4 gap-4`}
+`;
 
-	console.log(movies);
+const Button = tw.button` text-white bg-purple-600 shadow-lg flex justify-center items-center rounded-lg p-4 cursor-pointer hover:bg-purple-500 focus:outline-none`;
+
+const Group = tw.div`flex justify-around items-center mb-4`;
+
+function generateArrayOfNumbers(numbers) {
+	return [...Array(numbers).keys()].slice(1);
+}
+
+export default function Home() {
+	const [pageIndex, setPageIndex] = useState(1);
+	const { movies, isLoading, isError, url } = useGetMovies(pageIndex);
+
+	const emtpy = generateArrayOfNumbers(20);
+
+	const nextPage = () => {
+		setPageIndex(pageIndex + 1);
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
+	};
+
+	const prevPage = () => {
+		if (pageIndex === 1) {
+			return;
+		} else {
+			setPageIndex(pageIndex - 1);
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		}
+	};
 	return (
 		<Shell>
 			<Head>
@@ -79,28 +118,78 @@ export default function Home() {
 			<Container>
 				<NavBar />
 				<Main>
-					<Latest />
+					{isLoading ? (
+						<HelpDiv>
+							Loading...
+							<SpinnerDotted
+								size={50}
+								thickness={100}
+								speed={100}
+								color="rgba(255, 255, 255, 1)"
+							/>
+						</HelpDiv>
+					) : (
+						<Latest
+							image={movies.results[0].backdrop_path}
+							url={url}
+							title={movies.results[0].original_title}
+							id={movies.results[0].id}
+							vote={movies.results[0].vote_average}
+							overview={movies.results[0].overview}
+							isLoading={isLoading}
+						/>
+					)}
+
 					<MovieSection>
 						MOST POPULAR MOVIES
-						{isLoading ? (
-							"Loading..."
-						) : (
-							<MovieList>
-								{movies.results.map((item, idx) => (
-									<Movie
-										url={url}
-										image={item.backdrop_path}
-										title={item.original_title}
-										id={item.id}
-										vote={item.vote_average}
-									/>
-								))}
-							</MovieList>
-						)}
+						<MovieList>
+							{isLoading ? (
+								<>
+									{emtpy.map((item, idx) => (
+										<Movie
+											url={url}
+											image=""
+											title="..."
+											id="..."
+											vote="..."
+											key={`Empty Movie ${idx}`}
+										/>
+									))}
+								</>
+							) : (
+								<>
+									{movies.results.map((item, idx) => (
+										<Movie
+											url={url}
+											image={
+												!isLoading && item.poster_path
+											}
+											title={
+												!isLoading
+													? item.original_title
+													: "..."
+											}
+											id={!isLoading ? item.id : "..."}
+											vote={item.vote_average}
+											key={`Movie ${idx}`}
+										/>
+									))}
+								</>
+							)}
+						</MovieList>
 					</MovieSection>
+
+					<Group>
+						<Button onClick={prevPage}>
+							<BsArrowLeft />
+						</Button>
+						<Button onClick={nextPage}>
+							<BsArrowRight />
+						</Button>
+					</Group>
 				</Main>
 
-				<Footer>Footer</Footer>
+				<Footer></Footer>
 			</Container>
 			<Credentials>
 				Made with 💜 by{" "}

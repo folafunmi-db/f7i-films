@@ -14,51 +14,47 @@ const Container = styled.div`
 	/* background-clip: padding-box; */
 	background-color: #8d54e7;
 	height: 28rem;
+	width: 95%;
 
-	${tw`shadow-lg hover:shadow-xl transition text-white font-m rounded-lg w-full flex flex-col justify-center items-center`}
+	${tw`shadow-lg hover:shadow-xl transition text-white font-m rounded-lg  flex flex-col justify-around items-center`}
 `;
 
 const Pic = styled.div`
-	height: 24rem;
+	height: 20rem;
 	${({ image, url }) =>
 		image &&
 		`background-image: url("https://image.tmdb.org/t/p/w500/${image}");`};
-	${tw` w-11/12 bg-cover bg-center rounded-lg cursor-pointer`}
+	${tw` w-11/12 bg-cover bg-center rounded-lg`}
 	transition: .1s ease-in;
 
 	&:hover {
-		transform: scaleX(1.09) scaleY(1.07);
+		transform: scaleX(1.09) scaleY(1.09);
 		transition: 0.1s ease-in;
 	}
 `;
 
 const Group = styled.div`
-	height: 3rem;
+	/* height: 3rem; */
 	width: 100%;
-	${tw` w-11/12 flex justify-between items-center gap-6 `}
+	${tw` w-11/12 flex flex-col justify-start items-start gap-1 `}
 `;
 
-const Title = tw.h2`text-base whitespace-nowrap overflow-x-hidden overflow-ellipsis`;
+const Title = tw.h2`text-sm whitespace-nowrap w-full overflow-x-hidden overflow-ellipsis`;
 
-const Rating = tw.h2`text-xl flex justify-center items-center gap-1`;
+const Chr = tw.h2`text-sm flex justify-between items-center gap-1`;
 
-const Movie = ({ image, url, title, vote, id }) => {
+const Cast = ({ image, url, title, vote, id, character, department }) => {
 	return (
 		<Container>
-			<Link href={`/movie/${id}`}>
-				<Pic image={image} url={url}></Pic>
-			</Link>
+			<Pic image={image} url={url}></Pic>
 			<Group>
-				<Link href={`/movie/${id}`}>
-					<Title>{title}</Title>
-				</Link>
-				<Rating>
-					<BiStar />
-					{vote}
-				</Rating>
+				<Title>Name: {title}</Title>
+				<Title>Character: {character}</Title>
+				<Title>Department: {department}</Title>
+				<Title>Popularity: {vote}</Title>
 			</Group>
 		</Container>
 	);
 };
 
-export default Movie;
+export default Cast;
