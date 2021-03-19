@@ -30,7 +30,9 @@ const NavBar = () => {
 			</Link>
 
 			<Navs>
+			<Link href="/">
 				<Route>Home</Route>
+				</Link>
 				{session ? (
 					<Route onClick={() => signOut()}>Sign Out</Route>
 				) : (

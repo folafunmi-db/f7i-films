@@ -12,7 +12,7 @@ const Container = styled.div`
 	/* backdrop-filter: blur(40px); */
 	/* border: 3px solid transparent; */
 	/* background-clip: padding-box; */
-	background-color: #8d54e7;
+	background-color: #7c3aed;
 	height: 28rem;
 
 	${tw`shadow-lg hover:shadow-xl transition text-white font-m rounded-lg w-full flex flex-col justify-center items-center`}
@@ -40,7 +40,7 @@ const Group = styled.div`
 
 const Title = tw.h2`text-base whitespace-nowrap overflow-x-hidden overflow-ellipsis`;
 
-const Rating = tw.h2`text-xl flex justify-center items-center gap-1`;
+const Rating = tw.h2`text-xl flex justify-center text-yellow-400 items-center gap-1`;
 
 const Movie = ({ image, url, title, vote, id }) => {
 	return (
@@ -53,7 +53,7 @@ const Movie = ({ image, url, title, vote, id }) => {
 					<Title>{title}</Title>
 				</Link>
 				<Rating>
-					<BiStar />
+					<BiStar style={{color: "#fbbf24"}}/>
 					{vote}
 				</Rating>
 			</Group>

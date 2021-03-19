@@ -12,7 +12,7 @@ const Container = styled.div`
 	/* backdrop-filter: blur(40px); */
 	/* border: 3px solid transparent; */
 	/* background-clip: padding-box; */
-	background-color: #8d54e7;
+	background-color: #7c3aed;
 	height: 28rem;
 	width: 95%;
 
@@ -39,19 +39,27 @@ const Group = styled.div`
 	${tw` w-11/12 flex flex-col justify-start items-start gap-1 `}
 `;
 
-const Title = tw.h2`text-sm whitespace-nowrap w-full overflow-x-hidden overflow-ellipsis`;
+const Title = tw.h2` flex justify-start items-center gap-2 text-sm whitespace-nowrap w-full text-yellow-400 overflow-x-hidden overflow-ellipsis`;
 
-const Chr = tw.h2`text-sm flex justify-between items-center gap-1`;
+const Inner = tw.h2`text-white w-max`
 
 const Cast = ({ image, url, title, vote, id, character, department }) => {
 	return (
 		<Container>
 			<Pic image={image} url={url}></Pic>
 			<Group>
-				<Title>Name: {title}</Title>
-				<Title>Character: {character}</Title>
-				<Title>Department: {department}</Title>
-				<Title>Popularity: {vote}</Title>
+				<Title>
+					Name: <Inner>{title}</Inner>
+				</Title>
+				<Title>
+					Character: <Inner>{character}</Inner>
+				</Title>
+				<Title>
+					Department: <Inner>{department}</Inner>
+				</Title>
+				<Title>
+					Popularity: <Inner>{vote}</Inner>
+				</Title>
 			</Group>
 		</Container>
 	);
