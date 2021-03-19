@@ -37,14 +37,17 @@ const Overview = styled.div`
 
 const WatchList = tw.button` focus:outline-none active:bg-yellow-300 outline-none font-medium bg-yellow-400 hover:shadow-lg px-2 w-max py-4 rounded-lg font-m flex justify-between items-center text-purple-700`;
 
-
 const useStateWithLocalStorage = (localStorageKey) => {
 	const [value, setValue] = useState(
 		localStorage.getItem(localStorageKey) || false
 	);
 
 	useEffect(() => {
-		localStorage.setItem(localStorageKey, value);
+		if (value === false) {
+			localStorage.setItem(localStorageKey, value);
+		}else{
+				localStorage.removeItem(localStorageKey);
+		}
 	}, [value]);
 
 	return [value, setValue];
