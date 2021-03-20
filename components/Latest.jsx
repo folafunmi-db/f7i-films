@@ -43,11 +43,12 @@ const useStateWithLocalStorage = (localStorageKey) => {
 	);
 
 	useEffect(() => {
-		if (value === true) {
-			localStorage.setItem(localStorageKey, value);
-		}else{
-				localStorage.removeItem(localStorageKey);
-		}
+		localStorage.setItem(localStorageKey, value);
+		// if (value === true) {
+		// 	localStorage.setItem(localStorageKey, value);
+		// }else{
+		// 		localStorage.setItem(localStorageKey, value);
+		// }
 	}, [value]);
 
 	return [value, setValue];
