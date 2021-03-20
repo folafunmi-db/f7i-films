@@ -43,12 +43,11 @@ const useStateWithLocalStorage = (localStorageKey) => {
 	);
 
 	useEffect(() => {
-		localStorage.setItem(localStorageKey, value);
-		// if (value === true) {
-		// 	localStorage.setItem(localStorageKey, value);
-		// }else{
-		// 		localStorage.setItem(localStorageKey, value);
-		// }
+		if (value) {
+			localStorage.setItem(localStorageKey, value);
+		} else {
+			localStorage.removeItem(localStorageKey);
+		}
 	}, [value]);
 
 	return [value, setValue];
@@ -74,7 +73,9 @@ const Latest = ({ image, url, title, vote, id, overview, isLoading }) => {
 				{loading ? <Overview>Hold on...</Overview> : ""}
 				{session ? (
 					<WatchList onClick={() => setAdded(!added)}>
-						{added || false ? "Added to Watchlist" : "+ Add to Watchlist"}
+						{added || false
+							? "Added to Watchlist"
+							: "+ Add to Watchlist"}
 					</WatchList>
 				) : (
 					""

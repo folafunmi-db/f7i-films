@@ -111,7 +111,7 @@ const MoviePage = () => {
 							image={details.backdrop_path}
 							url={url}
 							title={details.original_title}
-							id={details.id}
+							id={id}
 							vote={details.vote_average}
 							overview={details.overview}
 							isLoading={isLoading}
