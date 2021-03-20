@@ -74,7 +74,7 @@ const Latest = ({ image, url, title, vote, id, overview, isLoading }) => {
 				{loading ? <Overview>Hold on...</Overview> : ""}
 				{session ? (
 					<WatchList onClick={() => setAdded(!added)}>
-						{added ? "Added to Watchlist" : "+ Add to Watchlist"}
+						{added || false ? "Added to Watchlist" : "+ Add to Watchlist"}
 					</WatchList>
 				) : (
 					""
